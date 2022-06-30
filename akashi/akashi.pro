@@ -17,6 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter
 
+QMAKE_LFLAGS += -Wl,-rpath,"'\$$ORIGIN'"
+
 DESTDIR = $$PWD/../bin
 OBJECTS_DIR = $$PWD/../build
 MOC_DIR = $$PWD/../build
