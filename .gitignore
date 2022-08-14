@@ -73,8 +73,10 @@ Thumbs.db
 build/
 bin/akashi
 bin/config/
-bin_tests/
+bin_tests/unittest_*
 bin/logs/
 bin/core.lib
 bin/libcore.a
 doxygen/html
+
+.vscode/

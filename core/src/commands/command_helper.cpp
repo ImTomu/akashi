@@ -19,7 +19,7 @@
 
 #include "include/area_data.h"
 #include "include/config_manager.h"
-#include "include/network/aopacket.h"
+#include "include/packet/packet_factory.h"
 #include "include/server.h"
 
 // This file is for functions used by various commands, defined in the command helper function category in aoclient.h
@@ -84,24 +84,28 @@ int AOClient::genRand(int min, int max)
 #endif
 }
 
-void AOClient::diceThrower(int argc, QStringList argv, bool p_roll)
+void AOClient::diceThrower(int sides, int dice, bool p_roll, int roll_modifier)
 {
-    int l_sides = 6;
-    int l_dice = 1;
+    if (sides < 0 || dice < 0 || sides > ConfigManager::diceMaxValue() || dice > ConfigManager::diceMaxDice()) {
+        sendServerMessage("Dice or side number out of bounds.");
+        return;
+    }
     QStringList results;
-    if (argc >= 1)
-        l_sides = qBound(1, argv[0].toInt(), ConfigManager::diceMaxValue());
-    if (argc == 2)
-        l_dice = qBound(1, argv[1].toInt(), ConfigManager::diceMaxDice());
-    for (int i = 1; i <= l_dice; i++) {
-        results.append(QString::number(AOClient::genRand(1, l_sides)));
+    for (int i = 1; i <= dice; i++) {
+        results.append(QString::number(AOClient::genRand(1, sides) + roll_modifier));
     }
     QString total_results = results.join(" ");
     if (p_roll) {
-        sendServerMessage("You rolled a " + QString::number(l_dice) + "d" + QString::number(l_sides) + ". Results: " + total_results);
+        if (roll_modifier)
+            sendServerMessage("You rolled a " + QString::number(dice) + "d" + QString::number(sides) + "+" + QString::number(roll_modifier) + ". Results: " + total_results);
+        else
+            sendServerMessage("You rolled a " + QString::number(dice) + "d" + QString::number(sides) + ". Results: " + total_results);
         return;
     }
-    sendServerMessageArea(m_ooc_name + " rolled a " + QString::number(l_dice) + "d" + QString::number(l_sides) + ". Results: " + total_results);
+    if (roll_modifier)
+        sendServerMessageArea(m_ooc_name + " rolled a " + QString::number(dice) + "d" + QString::number(sides) + "+" + QString::number(roll_modifier) + ". Results: " + total_results);
+    else
+        sendServerMessageArea(m_ooc_name + " rolled a " + QString::number(dice) + "d" + QString::number(sides) + ". Results: " + total_results);
 }
 
 QString AOClient::getAreaTimer(int area_idx, int timer_idx)
@@ -224,7 +228,7 @@ void AOClient::sendNotice(QString f_notice, bool f_global)
         l_message += "server-wide ";
     l_message += "notice:\n\n" + f_notice;
     sendServerMessageArea(l_message);
-    AOPacket l_packet("BB", {l_message});
+    AOPacket *l_packet = PacketFactory::createPacket("BB", {l_message});
     if (f_global)
         server->broadcast(l_packet);
     else
