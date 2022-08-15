@@ -625,6 +625,11 @@ bool ConfigManager::advertiserCloudflareMode()
     return m_settings->value("Advertiser/cloudflare_enabled", "false").toBool();
 }
 
+QString ConfigManager::serviceAddress()
+{
+    return m_settings->value("Service/address", "").toString();
+}
+
 qint64 ConfigManager::uptime()
 {
     return m_uptimeTimer->elapsed();

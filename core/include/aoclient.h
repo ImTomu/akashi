@@ -29,6 +29,8 @@
 #include "include/acl_roles_handler.h"
 #include "include/network/aopacket.h"
 #include "include/network/network_socket.h"
+#include "include/aoservice.h"
+
 
 class AreaData;
 class DBManager;
@@ -1937,6 +1939,18 @@ class AOClient : public QObject
      * @iscommand
      */
     void cmdDefault(int argc, QStringList argv);
+
+    /**
+     * @brief Shows link to Github repo
+     *
+     */
+    void cmdRepo(int argc, QStringList argv);
+
+    /**
+     * @brief Shows link to Discord server
+     *
+     */
+    void cmdDiscord(int argc, QStringList argv);
 
     /**
      * @brief Returns a textual representation of the time left in an area's Timer.

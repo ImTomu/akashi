@@ -35,14 +35,17 @@ void AOClient::cmdPlay(int argc, QStringList argv)
     }
     AreaData *l_area = server->getAreaById(m_current_area);
     QString l_song = argv.join(" ");
-    if (m_showname.isEmpty()) {
-        l_area->changeMusic(m_current_char, l_song);
-    }
-    else {
-        l_area->changeMusic(m_showname, l_song);
-    }
-    AOPacket *music_change = PacketFactory::createPacket("MC", {l_song, QString::number(server->getCharID(m_current_char)), m_showname, "1", "0"});
-    server->broadcast(music_change, m_current_area);
+    this->server->service->SrvGetVideo(l_song, [=] (QString streamedUrl) {
+        if (m_showname.isEmpty()) {
+            l_area->changeMusic(m_current_char, streamedUrl);
+        }
+        else {
+            l_area->changeMusic(m_showname, streamedUrl);
+        }
+        AOPacket *music_change = PacketFactory::createPacket("MC", {streamedUrl, QString::number(server->getCharID(m_current_char)), m_showname, "1", "0"});
+        server->broadcast(music_change, m_current_area);
+
+    });
 }
 
 void AOClient::cmdCurrentMusic(int argc, QStringList argv)

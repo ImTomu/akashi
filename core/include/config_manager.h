@@ -455,6 +455,8 @@ class ConfigManager
      */
     static bool advertiserCloudflareMode();
 
+    static QString serviceAddress();
+
     /**
      * @brief Returns the uptime of the server in miliseconds.
      */

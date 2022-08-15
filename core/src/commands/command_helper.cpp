@@ -34,6 +34,24 @@ void AOClient::cmdDefault(int argc, QStringList argv)
     return;
 }
 
+void AOClient::cmdRepo(int argc, QStringList argv)
+{
+    Q_UNUSED(argc);
+    Q_UNUSED(argv);
+
+    sendServerMessage("Visit our repo at https://github.com/imtomu/akashi/tree/gwtw");
+    return;
+}
+
+void AOClient::cmdDiscord(int argc, QStringList argv)
+{
+    Q_UNUSED(argc);
+    Q_UNUSED(argv);
+
+    sendServerMessage("Join our discord at  https://discord.gg/DsPyF7CMeE");
+    return;
+}
+
 QStringList AOClient::buildAreaList(int area_idx)
 {
     QStringList entries;

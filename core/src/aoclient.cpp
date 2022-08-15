@@ -26,6 +26,8 @@
 
 const QMap<QString, AOClient::CommandInfo> AOClient::COMMANDS{
     {"login", {{ACLRole::NONE}, 0, &AOClient::cmdLogin}},
+    {"repo", {{ACLRole::NONE}, 0, &AOClient::cmdRepo}},
+    {"discord", {{ACLRole::NONE}, 0, &AOClient::cmdDiscord}},
     {"getarea", {{ACLRole::NONE}, 0, &AOClient::cmdGetArea}},
     {"getareas", {{ACLRole::NONE}, 0, &AOClient::cmdGetAreas}},
     {"ban", {{ACLRole::BAN}, 3, &AOClient::cmdBan}},

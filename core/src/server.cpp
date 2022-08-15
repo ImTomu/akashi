@@ -58,6 +58,7 @@ Server::Server(int p_port, int p_ws_port, QObject *parent) :
     connect(this, &Server::logConnectionAttempt, logger, &ULogger::logConnectionAttempt);
 
     AOPacket::registerPackets();
+    service = new AOService();
 }
 
 void Server::start()

@@ -36,6 +36,7 @@ DEFINES += NET_DEBUG
 SOURCES += \
     src/acl_roles_handler.cpp \
     src/aoclient.cpp \
+    src/aoservice.cpp \
     src/network/aopacket.cpp \
     src/network/network_socket.cpp \
     src/area_data.cpp \
@@ -51,6 +52,7 @@ SOURCES += \
     src/config_manager.cpp \
     src/db_manager.cpp \
     src/discord.cpp \
+    src/network/services.cpp \
     src/packets.cpp \
     src/server.cpp \
     src/testimony_recorder.cpp \
@@ -86,6 +88,7 @@ HEADERS += include/aoclient.h \
     include/acl_roles_handler.h \
     include/akashidefs.h \
     include/akashiutils.h \
+    include/aoservice.h \
     include/network/aopacket.h \
     include/network/network_socket.h \
     include/area_data.h \

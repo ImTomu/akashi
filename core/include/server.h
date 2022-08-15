@@ -32,6 +32,7 @@
 #include <QWebSocketServer>
 
 #include "include/network/aopacket.h"
+#include "include/aoservice.h"
 
 class ACLRolesHandler;
 class Advertiser;
@@ -333,6 +334,11 @@ class Server : public QObject
      * @brief Attempts to parse a IPv6 mapped IPv4 to an IPv4.
      */
     QHostAddress parseToIPv4(QHostAddress f_remote_ip);
+
+    /**
+     * @brief AO Service.
+     */
+    AOService *service;
 
   public slots:
     /**
